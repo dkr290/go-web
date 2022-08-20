@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fruits & Transport</title>
+</head>
+<body>
+
+<ul>
+    {{range .Fruits}}
+    <li>{{.Name}} - {{.Color}}</li>
+    {{end}}
+</ul>
+
+<ul>
+    {{range .Transport}}
+    <li>{{.Manufacturer}} - {{.Model}} - {{.Doors}}</li>
+    {{end}}
+</ul>
+
+</body>
+</html>
