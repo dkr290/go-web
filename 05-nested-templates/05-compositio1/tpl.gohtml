@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+</head>
+<body>
+
+<h3>{{ .Name }}</h3>
+<h4>{{ .Age }}</h4>
+{{ if .LicenseToKill }}
+<h3>License to kill</h3>
+{{else}}
+<h3>License to ill</h3>
+{{end}}
+</body>
+</html>
