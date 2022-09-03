@@ -22,6 +22,7 @@ func main() {
 
 }
 
+// this is the return only
 func foo(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "text/html; charset=utf-8")
 	io.WriteString(res, "<h2>foo run</h2>")
