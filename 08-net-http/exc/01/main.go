@@ -30,7 +30,7 @@ func foo(res http.ResponseWriter, req *http.Request) {
 
 func cat(res http.ResponseWriter, req *http.Request) {
 
-	err := tpl.ExecuteTemplate(res, "cat.gohtml", nil)
+	err := tpl.ExecuteTemplate(res, "cat.gohtml", "toby.jpg")
 	if err != nil {
 		log.Fatalln("error executing template", err)
 	}
