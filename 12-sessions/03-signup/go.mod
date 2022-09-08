@@ -1,4 +1,4 @@
-module github.com/dkr290/go-web/12-sessions/03-signup
+module signup
 
 go 1.19
 

@@ -71,9 +71,10 @@ func signup(res http.ResponseWriter, req *http.Request) {
 		// redirect
 		http.Redirect(res, req, "/", http.StatusSeeOther)
 		return
+
 	}
 
-	tpl.ExecuteTemplate(res, "index.gohtml", u)
+	tpl.ExecuteTemplate(res, "index.gohtml", nil)
 
 }
 
