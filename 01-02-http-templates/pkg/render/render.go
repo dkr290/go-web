@@ -9,7 +9,8 @@ import (
 
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
 
-	tpl, _ := template.ParseFiles("./templates/" + tmpl)
-	err := tpl.Execute(w, nil)
+	tpl, err := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.gohtml")
+	custerror.ErrPrint(err)
+	err = tpl.ExecuteTemplate(w, tmpl, nil)
 	custerror.ErrPrint(err)
 }
