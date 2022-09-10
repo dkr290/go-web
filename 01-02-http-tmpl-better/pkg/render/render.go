@@ -1,7 +1,9 @@
 package render
 
 import (
+	"bytes"
 	"html/template"
+	"log"
 	"net/http"
 	"path/filepath"
 
@@ -10,19 +12,36 @@ import (
 
 func RenderTemplate(w http.ResponseWriter, tmpl string) {
 
+	//get the template cache from app config
+
 	//create template cache
+
+	tc, err := CreateTemplateCache()
+	custerror.FatalErr(err)
 
 	//get reused template from cache
 
+	t, ok := tc[tmpl]
+	if !ok {
+		log.Fatal(err)
+	}
+
+	buf := new(bytes.Buffer)
+
+	err = t.Execute(buf, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	//render the template
 
-	tpl, err := template.ParseFiles("./templates/"+tmpl, "./templates/base.layout.gohtml")
-	custerror.ErrPrint(err)
-	err = tpl.ExecuteTemplate(w, tmpl, nil)
-	custerror.ErrPrint(err)
+	_, err = buf.WriteTo(w)
+	if err != nil {
+		log.Println(err)
+	}
 }
 
-func createTemplateCache() (map[string]*template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 
 	myCache := map[string]*template.Template{}
 

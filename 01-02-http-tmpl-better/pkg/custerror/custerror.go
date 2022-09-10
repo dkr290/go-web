@@ -17,3 +17,11 @@ func FatalErr(err error) {
 		log.Fatalln(err)
 	}
 }
+
+func FatalErrString(s string, err error) {
+
+	if err != nil {
+		log.Fatalf("%s %v", s, err)
+	}
+
+}
