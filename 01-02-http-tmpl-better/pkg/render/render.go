@@ -7,28 +7,59 @@ import (
 	"net/http"
 	"path/filepath"
 
+	"github.com/dkr290/go-web/01-02-http-templates/pkg/config"
 	"github.com/dkr290/go-web/01-02-http-templates/pkg/custerror"
+	"github.com/dkr290/go-web/01-02-http-templates/pkg/models"
 )
 
-func RenderTemplate(w http.ResponseWriter, tmpl string) {
+var app *config.AppConfig
+
+//Newtemplates sets the confit to template package
+
+func Newtemplates(a *config.AppConfig) {
+	app = a
+
+}
+
+func AddDEfaultData(td *models.TemplateData) *models.TemplateData {
+	return td
+}
+
+func RenderTemplate(w http.ResponseWriter, tmpl string, td *models.TemplateData) {
 
 	//get the template cache from app config
+	var tc map[string]*template.Template
+	var err error
+	if app.UseCache {
+
+		tc = app.TemplateCache
+	} else {
+		tc, err = CreateTemplateCache()
+		custerror.FatalErr(err)
+	}
 
 	//create template cache
 
-	tc, err := CreateTemplateCache()
-	custerror.FatalErr(err)
+	//commented out because it gets form app.config
+	//tc, err := CreateTemplateCache()
+	//custerror.FatalErr(err)
 
 	//get reused template from cache
 
+	// t, ok := tc[tmpl]
+	// if !ok {
+	// 	log.Fatal(err)
+	// }
+
 	t, ok := tc[tmpl]
 	if !ok {
-		log.Fatal(err)
+		log.Fatal("Could not get template from template cache")
 	}
 
 	buf := new(bytes.Buffer)
 
-	err = t.Execute(buf, nil)
+	td = AddDEfaultData(td)
+	err = t.Execute(buf, td)
 	if err != nil {
 		log.Fatal(err)
 	}

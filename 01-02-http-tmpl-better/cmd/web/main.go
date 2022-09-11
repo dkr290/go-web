@@ -20,9 +20,16 @@ func main() {
 	custerror.FatalErrString("cannot create template cache", err)
 	app.TemplateCache = tc
 
-	http.HandleFunc("/", handlers.Home)
+	app.UseCache = false
 
-	http.HandleFunc("/about", handlers.About)
+	repo := handlers.NewRepo(&app)
+	handlers.NewHandlers(repo)
+
+	render.Newtemplates(&app)
+
+	http.HandleFunc("/", handlers.Repo.Home)
+
+	http.HandleFunc("/about", handlers.Repo.About)
 	http.Handle("/favicon.cio", http.NotFoundHandler())
 	fmt.Println("starting application on port", hostPort)
 	http.ListenAndServe(hostPort, nil)
